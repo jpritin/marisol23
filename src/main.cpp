@@ -182,22 +182,9 @@ void loop() {
           //If the received data is LED_is_on, we set LOW the LED & Relay pin
           if(response_body == "LED_is_on"){
             led_is_on = true;
-            // Hacemos parpadeo si hemos agotado tiempo de refesco
-            if(Actual_Millis_blink - Previous_Millis_blink > refresh_time_blink) {
-              Previous_Millis_blink = Actual_Millis_blink;
-              if(led_blink) {
-                // LED & Rele are on when output is LOW
-                digitalWrite(LED, LOW);  
-                digitalWrite(Rele_Pin, LOW);  
-                Serial.print("Blink = ON");
-              } else {
-                // LED & Rele are off when output is HIGH
-                digitalWrite(LED, HIGH);  
-                digitalWrite(Rele_Pin, HIGH);
-                Serial.print("Blink = OFF");                
-              }
-              led_blink = !led_blink;     
-            }
+            // LED & Rele are on when output is LOW
+            digitalWrite(LED, LOW);  
+            digitalWrite(Rele_Pin, LOW);  
           } 
           //If the received data is LED_is_off, we set HIGH the LED & Relay pin
           if(response_body == "LED_is_off"){
@@ -218,25 +205,6 @@ void loop() {
       Serial.println("Reconnecting to WiFi...");
       WiFi.disconnect();     
       WiFi.begin(ssid, password);
-    }
-  }
-  // Hacemos parpadeo si hemos agotado tiempo de refesco y led está en ON
-  if (led_is_on) {
-    // Hacemos parpadeo si hemos agotado tiempo de refesco
-    if(Actual_Millis_blink - Previous_Millis_blink > refresh_time_blink) {
-      Previous_Millis_blink = Actual_Millis_blink;
-      if(led_blink) {
-        // LED & Rele are on when output is LOW
-        digitalWrite(LED, LOW);  
-        digitalWrite(Rele_Pin, LOW);  
-        Serial.print("EBlink = ON");
-      } else {
-        // LED & Rele are off when output is HIGH
-        digitalWrite(LED, HIGH);  
-        digitalWrite(Rele_Pin, HIGH);
-        Serial.print("EBlink = OFF");                
-      }
-      led_blink = !led_blink;     
     }
   }
 }
